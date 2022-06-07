@@ -10,9 +10,9 @@ kkk not exist
 
 import (
 	"fmt"
-	"geecache"
 	"log"
 	"net/http"
+	"reecache"
 )
 
 var db = map[string]string{
@@ -22,7 +22,7 @@ var db = map[string]string{
 }
 
 func main() {
-	geecache.NewGroup("scores", 2<<10, geecache.GetterFunc(
+	reecache.NewGroup("scores", 2<<10, reecache.GetterFunc(
 		func(key string) ([]byte, error) {
 			log.Println("[SlowDB] search key", key)
 			if v, ok := db[key]; ok {
@@ -32,7 +32,7 @@ func main() {
 		}))
 
 	addr := "localhost:9999"
-	peers := geecache.NewHTTPPool(addr)
-	log.Println("geecache is running at", addr)
+	peers := reecache.NewHTTPPool(addr)
+	log.Println("rreecache is running at", addr)
 	log.Fatal(http.ListenAndServe(addr, peers))
 }
